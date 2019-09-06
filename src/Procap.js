@@ -30,7 +30,6 @@ class Procap extends React.Component {
     this.setState({
       procapProps: { loggedIn: true, user: user }
     });
-    console.log(user);
   };
 }
 

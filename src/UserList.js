@@ -39,6 +39,8 @@ export default class UserList extends React.Component {
    */
 
   fetchUsers() {
-    get("/users").then(data => this.setState({ users: data }));
+    get("/users")
+      .catch(error => alert("Houve um erro: " + error))
+      .then(data => this.setState({ users: data }));
   }
 }

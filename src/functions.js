@@ -9,7 +9,12 @@ export default function post(url, body) {
       "Content-Type": "application/json",
       Accept: "application/json"
     }
-  }).then(data => data.json());
+  }).then(response => {
+    if (!response.ok) {
+      throw Error(response.status);
+    }
+    response.json();
+  });
 }
 
 export function get(url) {
@@ -20,5 +25,8 @@ export function get(url) {
       "Content-Type": "application/json",
       Accept: "application/json"
     }
-  }).then(data => data.json());
+  }).then(response => {
+    if (!response.ok) throw Error(response.status);
+    return response.json();
+  });
 }

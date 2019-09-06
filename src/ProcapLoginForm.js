@@ -1,9 +1,17 @@
 import React from "react";
-import { Button, Form, FormText } from "react-bootstrap";
+import { Button, Form, FormText, Alert } from "react-bootstrap";
 import post from "./functions";
 
 export default class ProcapLoginForm extends React.Component {
-  email = "";
+  constructor(props) {
+    super(props);
+    this.state = { errorMsg: null };
+  }
+
+  componentDidMount() {
+    //check user has a valid authentication
+  }
+
   render() {
     return (
       <div>
@@ -11,7 +19,14 @@ export default class ProcapLoginForm extends React.Component {
           <h4 style={{ marginTop: 40 }}>Login</h4>
           <FormText style={{ marginBottom: 20 }}>
             Autorizacao Requerida!
-          </FormText>
+          </FormText>{" "}
+          <Alert
+            variant="danger"
+            show={this.state.errorMsg != null}
+            dismissible
+          >
+            {this.state.errorMsg}
+          </Alert>
           <Form.Group controlId="formGroupEmail">
             <Form.Control
               type="email"
@@ -35,6 +50,15 @@ export default class ProcapLoginForm extends React.Component {
       id: 1,
       nome: "Usuario",
       sobrenome: "De Teste"
-    }).then(data => this.props.procapFunctions.logMeIn(data));
+    })
+      .then(user => {
+        //store user information
+        this.props.procapFunctions.logMeIn(user);
+      })
+      .catch(error => {
+        this.setState({
+          errorMsg: "Houve um erro: " + error
+        });
+      });
   };
 }
